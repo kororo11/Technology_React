@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // 비구조화 할당 문법을 통해 props 내부 값 추출하기
 const MyComponent = ({ name, children }) => {
@@ -13,6 +14,10 @@ const MyComponent = ({ name, children }) => {
 
 MyComponent.defaultProps = {
 	name: '기본 이름',
+};
+
+MyComponent.propTypes = {
+	name: PropTypes.string.isRequired,
 };
 
 export default MyComponent;
