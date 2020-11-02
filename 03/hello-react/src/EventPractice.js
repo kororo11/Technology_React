@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
 
 const EventPractice = () => {
-	const [username, setUsername] = useState('');
-	const [message, setMessage] = useState('');
+	const [form, setForm] = useState({
+		username: '',
+		message: '',
+	});
 
-	const onChangeUsername = e => setUsername(e.target.value);
-	const onChangeMessage = e => setMessage(e.target.value);
+	const { username, message } = form;
+
+	const onChange = e => {
+		const nextForm = {
+			...form, // 기존의 form 내용을 이 자리에 복사한 뒤
+			[e.target.name]: e.target.value, // 원하는 값을 덮어 씌우기
+		};
+		setForm(nextForm);
+	};
 
 	const onClick = () => {
 		alert(username + ' : ' + message);
-		setUsername('');
-		setMessage('');
+		setForm({
+			username: '',
+			message: '',
+		});
 	};
 
 	const onKeyPress = e => {
@@ -27,17 +38,17 @@ const EventPractice = () => {
 				name="username"
 				placeholder="사용자명"
 				value={username}
-				onChange={onChangeUsername}
+				onChange={onChange}
 			/>
 			<input
 				type="text"
 				name="message"
-				placeholder="아무거나 입력하세요"
+				placeholder="아무거나 적어요"
 				value={message}
-				onChange={onChangeMessage}
+				onChange={onChange}
 				onKeyPress={onKeyPress}
 			/>
-			<button onClick={onClick}>확인</button>
+			<button>확인</button>
 		</div>
 	);
 };
