@@ -20,6 +20,17 @@ class EventPractice extends Component {
 						});
 					}}
 				/>
+
+				<button
+					onClick={() => {
+						alert(this.state.message);
+						this.setState({
+							message: '',
+						});
+					}}
+				>
+					확인
+				</button>
 			</div>
 		);
 	}
