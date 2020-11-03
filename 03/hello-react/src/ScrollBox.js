@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
 
 class ScrollBox extends Component {
+	/*
+        scrollTop: 세로 스크롤바 위치(0 ~ 350)
+        scrollHeight: 스크롤이 있는 박스 안의 div 높이(650)
+        clientHeight: 스크롤이 있는 박스의 높이(300)
+    */
+
+	scrollToBottom = () => {
+		const { scrollHeight, clientHeight } = this.box;
+		this.box.scrollTop = scrollHeight - clientHeight;
+	};
+
 	render() {
 		const style = {
 			border: '1px solid black',
-			height: '400px',
+			height: '300px',
 			with: '300px',
 			overflow: 'auto',
 			position: 'relative',
