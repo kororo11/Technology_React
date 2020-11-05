@@ -1,11 +1,11 @@
 import React from 'react';
-import Counter from './Counter';
+import Info from './Info';
 
 function App() {
 	return (
 		<div>
 			<h2>8장. Hooks</h2>
-			<Counter />
+			<Info />
 		</div>
 	);
 }
