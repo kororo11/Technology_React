@@ -1,11 +1,11 @@
 import React from 'react';
-import Info from './Info';
+import Average from './Average';
 
 const App = () => {
 	return (
 		<div>
 			<h2>8장. Hooks</h2>
-			<Info />
+			<Average />
 		</div>
 	);
 };
