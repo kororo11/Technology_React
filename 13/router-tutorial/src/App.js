@@ -1,9 +1,13 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
+import Home from './Home';
+import About from './About';
 
 const App = () => {
 	return (
 		<div>
-			<h1>13장 리엑트 라우터로 SPA 개발하기</h1>
+			<Route path="/" component={Home} />
+			<Route path="/about" component={About} />
 		</div>
 	);
 };
