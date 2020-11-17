@@ -1,67 +1,63 @@
-import React, { useState, useCallback, useRef } from "react";
-import TodoTemplate from "./component/TodoTemplate";
+import React, { useReducer, useRef, useCallback } from "react";
+import TodoTmplate from "./component/TodoTemplate";
 import TodoInsert from "./component/TodoInsert";
 import TodoList from "./component/TodoList";
 
-const App = () => {
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      text: "리엑트의 기초 알아보기",
-      checked: true,
-    },
-    {
-      id: 2,
-      text: "컴포넌트 스타일링해 보기",
-      checked: true,
-    },
-    {
-      id: 3,
-      text: "일정 관리 앱 만들어 보기",
+function createBulTodos() {
+  const array = [];
+  for (let i = 1; i <= 2500; i++) {
+    array.push({
+      id: i,
+      text: `할 일 ${i}`,
       checked: false,
-    },
-  ]);
+    });
+  }
+  return array;
+}
 
-  // 고유값으로 사용될 id
-  // ref 를 사용하여 변수 담기
-  const nextId = useRef(4);
-
-  const onInsert = useCallback(
-    (text) => {
-      const todo = {
-        id: nextId.current,
-        text,
-        checked: false,
-      };
-      setTodos(todos.concat(todo));
-      nextId.current += 1;
-    },
-    [todos],
-  );
-
-  const onRemove = useCallback(
-    (id) => {
-      setTodos(todos.filter((todo) => todo.id !== id));
-    },
-    [todos],
-  );
-
-  const onToggle = useCallback(
-    (id) => {
-      setTodos(
-        todos.map((todo) =>
-          todo.id === id ? { ...todo, checked: !todo.checked } : todo,
-        ),
+function todoReducer(todos, action) {
+  switch (action.type) {
+    case "INSERT":
+      return todos.concat(action.todo);
+    case "REMOVE":
+      return todos.filter((todo) => todo.id !== action.id);
+    case "TOGGLE":
+      return todos.map((todo) =>
+        todo.id === action.id ? { ...todo, checked: !todo.checked } : todo,
       );
-    },
-    [todos],
-  );
+    default:
+      return todos;
+  }
+}
+
+const App = () => {
+  const [todos, dispath] = useReducer(todoReducer, undefined, createBulTodos);
+
+  const nextId = useRef(2501);
+
+  const onInsert = useCallback((text) => {
+    const todo = {
+      id: nextId.current,
+      text,
+      checked: false,
+    };
+    dispath({ type: "INSERT", todo });
+    nextId.current += 1;
+  }, []);
+
+  const onRemove = useCallback((id) => {
+    dispath({ type: "REMOVE", id });
+  }, []);
+
+  const onToggle = useCallback((id) => {
+    dispath({ type: "TOGGLE", id });
+  }, []);
 
   return (
-    <TodoTemplate>
+    <TodoTmplate>
       <TodoInsert onInsert={onInsert} />
       <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle} />
-    </TodoTemplate>
+    </TodoTmplate>
   );
 };
 
